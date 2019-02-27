@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 from submission import create_submission
+from preprocessing import get_modeling_data
 
 
 def run_pipe_1():
@@ -30,15 +31,7 @@ def run_pipe_2():
     return pipe
 
 
-def get_modeling_data():
-    train = pd.read_csv("data/train_processed_2.csv")
 
-    features = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex_cat', 'Embarked_cat']
-    label = ["Survived"]
-    X = train[features]
-    y = train[label]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-    return X_train, X_test, y_train, y_test
 
 
 if __name__ == '__main__':

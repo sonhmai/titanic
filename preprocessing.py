@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
 def prepare_data_dropna(input_path):
@@ -67,6 +68,17 @@ def prepare_data_2(input_path):
     print(df.info())
     output_path = input_path.split('.')[0] + "_processed_2." + input_path.split('.')[1]
     df.to_csv(output_path)
+
+
+def get_modeling_data():
+    train = pd.read_csv("data/train_processed_2.csv")
+
+    features = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex_cat', 'Embarked_cat']
+    label = ["Survived"]
+    X = train[features]
+    y = train[label]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    return X_train, X_test, y_train, y_test
 
 
 if __name__ == '__main__':
