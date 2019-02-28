@@ -31,11 +31,11 @@ fit_params = {
 searchCV = GridSearchCV(pipe, cv=5, param_grid=param_grid, fit_params=fit_params)
 searchCV.fit(train_X, train_y)
 
-searchCV.best_params_
-searchCV.cv_results_['mean_train_score']
-searchCV.cv_results_['mean_test_score']
+print(searchCV.best_params_)
+print(searchCV.cv_results_['mean_train_score'])
+print(searchCV.cv_results_['mean_test_score'])
 
-searchCV.cv_results_['mean_train_score'].mean()
-searchCV.cv_results_['mean_test_score'].mean()
+print(searchCV.cv_results_['mean_train_score'].mean())
+print(searchCV.cv_results_['mean_test_score'].mean())
 
 

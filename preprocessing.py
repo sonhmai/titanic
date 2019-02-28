@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 
 def prepare_data_dropna(input_path):
@@ -48,15 +49,18 @@ def prepare_data_2(input_path):
     df.drop("Name", axis=1, inplace=True)
     # drop Cabin as it has 687/891 missing values
     df.drop("Cabin", axis=1, inplace=True)
-    # AGE - impute missing age with median
-    age_median = df["Age"].median(skipna=True)
-    df["Age"].fillna(age_median, inplace=True)
-    # FARE - impute missing fare with median
-    fare_median = df["Fare"].median(skipna=True)
-    df["Fare"].fillna(fare_median, inplace=True)
+
+    # AGE - impute missing age
+    imp = SimpleImputer(strategy='median')
+    df["Age"] = imp.fit_transform(df[["Age"]]).ravel()
+
+    # FARE - impute missing fare
+    imp = SimpleImputer(strategy='median')
+    df["Fare"] = imp.fit_transform(df[["Fare"]]).ravel()
+
     # EMBARKED - impute with most common values, only missing in train
-    most_frequent_emb = df["Embarked"].value_counts().idxmax()
-    df["Embarked"].fillna(most_frequent_emb, inplace=True)
+    imp = SimpleImputer(strategy='most_frequent')
+    df["Embarked"] = imp.fit_transform(df[["Embarked"]]).ravel()
 
     # encode sex
     df["Sex_cat"] = df["Sex"].astype("category")
