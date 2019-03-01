@@ -9,6 +9,7 @@ import pickle
 from preprocessing import get_modeling_data
 from submission import create_submission
 
+
 class XGB:
     def __init__(self, X_train, X_test, y_train, y_test):
         self.X_train = X_train
@@ -68,7 +69,7 @@ class XGB:
 
         fit_params = {
             'clf__eval_set': [(X_test, y_test)],
-            'clf__early_stopping_rounds': 20,
+            'clf__early_stopping_rounds': 10,
             'clf__verbose': False
         }
         pipe.fit(X_train, y_train)
@@ -103,6 +104,7 @@ if __name__ == '__main__':
     # # it makes no sense to normalize over all features as they have difference magnitude range
     # model.run_minmax()  # acc 0.791
     pipe = model.run_cv()
+    create_submission(pipe, 'xgb-bestcv-earlystop10')
     pickle.dump(pipe, open('data/xgb_bestcv.pkl', 'wb'))
 
 
