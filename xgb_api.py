@@ -2,8 +2,10 @@ import xgboost as xgb
 import pandas as pd
 import pickle
 import json
+import os
 
 
+print(os.getcwd())
 pipe = pickle.load(open('data/xgb_bestcv.pkl', 'rb'))
 
 
