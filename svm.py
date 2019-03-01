@@ -3,6 +3,8 @@ from sklearn.preprocessing import StandardScaler, Normalizer, MinMaxScaler
 from sklearn.pipeline import Pipeline
 
 from preprocessing import get_modeling_data
+from submission import create_submission
+import warnings
 
 
 class SVM:
@@ -28,6 +30,7 @@ class SVM:
         ])
         pipe.fit(X_train, y_train)
         acc = pipe.score(X_test, y_test)
+        create_submission(pipe, 'svm-linear-stdscaler')
         print(acc)
         return
 
@@ -53,6 +56,8 @@ class SVM:
 
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore')
+
     X_train, X_test, y_train, y_test = get_modeling_data()
     svm_model = SVM(X_train, X_test, y_train, y_test)
     svm_model.run_naive()  # acc 0.791
