@@ -1,5 +1,6 @@
 venv
 venv-py
+venv*
 __pycache__
 .idea
 *.iml
