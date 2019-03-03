@@ -6,6 +6,7 @@ import warnings
 
 from preprocessing import get_modeling_data
 from submission import create_submission
+from modelsaving import save_model
 
 
 class LogReg:
@@ -62,7 +63,6 @@ class LogReg:
         pipe = search_cv.best_estimator_
         acc = pipe.score(X_test, y_test)
         print("test acc:", acc)
-        create_submission(pipe, "logreg-best-cv")
         return pipe
 
 
@@ -71,6 +71,15 @@ if __name__ == '__main__':
 
     X_train, X_test, y_train, y_test = get_modeling_data()
     model = LogReg(X_train, X_test, y_train, y_test)
-    model.run_naive()
-    model.run_scaler()
-    model.run_special_1()
+    pipe = model.run_naive()
+    # model.run_scaler()
+    # pipe = model.run_special_1()
+    # create_submission(pipe, "logreg-best-cv")
+    # save_model(pipe, 'model')
+
+    # predict
+    sample = X_test.iloc[5:6].values.tolist()
+    print(sample)
+    res = pipe.predict(sample)
+    print(res)
+
